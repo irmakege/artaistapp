@@ -1,0 +1,84 @@
+.maindiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #1B1A21;
+    color: white;
+    padding: 64px 502px 73px;
+
+}
+
+.subdiv{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.h2headerdiv {
+    align-items: flex-start;
+}
+
+.buttonsubdiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.button1 {
+    width: 724px;
+    height: 63px;
+    background: linear-gradient(90deg, #ba92ef, #7562d8, #67d1fc);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.button2 {
+  
+    background-color: #2D2B35;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 18px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button2:hover{
+    border: 1px solid white;
+}
+
+.button2:active {
+    border: 1px solid white; /* Keep white border after clicking */
+  }
+
+.inputfield1{
+    width: 724px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2D2B35;
+    height: 118px;
+    color: #FFFFFF;
+
+}
+.inputfield2{
+
+    width: 724px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2D2B35;
+    height: 51px;
+    color: #FFFFFF;
+    margin-bottom: 23px ;
+}
