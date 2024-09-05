@@ -6,6 +6,7 @@
     background-color: #1B1A21;
     color: white;
     padding: 64px 502px 73px;
+    min-height: 100vh;
 
 }
 
@@ -63,6 +64,8 @@
     border: 1px solid white; /* Keep white border after clicking */
   }
 
+
+
 .inputfield1{
     width: 724px;
     border-radius: 5px;
@@ -70,6 +73,7 @@
     background-color: #2D2B35;
     height: 118px;
     color: #FFFFFF;
+    margin-bottom: 10px;
 
 }
 .inputfield2{
@@ -80,5 +84,18 @@
     background-color: #2D2B35;
     height: 51px;
     color: #FFFFFF;
-    margin-bottom: 23px ;
+    margin-bottom: 10px;
+}
+
+.button3{
+    height: 51px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2D2B35;
+    color: #FFFFFF;
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
 }

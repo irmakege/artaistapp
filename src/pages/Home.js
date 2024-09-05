@@ -3,6 +3,7 @@ import "./Home.css"
 import ArtaistLogo from "../assets/logo/artaist_business_logo.svg"
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
+import { useNavigate } from 'react-router-dom';
 
 const marks = [
     {
@@ -24,32 +25,66 @@ function valuetext(value) {
 }
 
 const Home = () => {
-    const [form, setForm] = useState({
-        prompt: '',
-        style: '',
+    const [formData, setFormData] = useState({
+        prompts: [''],
+        styles: [''],
         uid: 'irmakege',
         model: ''
     });
+    const [showQueueButton, setShowQueueButton] = useState(false);
+    const [inputFields, setInputFields] = useState([{ id: 1 }]);
+
+    const navigate = useNavigate();
 
     const onClick = (e) => {
         const { name, value } = e.target;
-        setForm({
-            ...form,
-            [name]: value  // Dynamically update input field values
-        });
-
-    };
-
-    // Handle input changes (onChange)
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setForm({
-            ...form,
+        setFormData({
+            ...formData,
             [name]: value  // Dynamically update input field values
         });
     };
 
-    console.log(form)
+    const onActive = (e) => {
+        const { value } = e.target;
+
+        if (value === 'queue') {
+            setShowQueueButton(true)
+        } else {
+            setShowQueueButton(false)
+        }
+
+    };
+
+    const handleInputChange = (event, index, type) => {
+        const { value } = event.target;
+        setFormData(prevData => {
+            const updatedArray = [...prevData[type]];
+            updatedArray[index] = value;
+            return {
+                ...prevData,
+                [type]: updatedArray
+            };
+        });
+
+    };
+
+    const addInputFields = () => {
+        setInputFields([...inputFields, { id: inputFields.length + 1 }]);
+        setFormData(prevData => ({
+            ...prevData,
+            prompts: [...prevData.prompts, ''],
+            styles: [...prevData.styles, '']
+        }));
+    };
+
+    // Handle form submission and redirect
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Navigate to the result page, passing form data through state
+        navigate('/result', { state: { formData } });
+    };
+
+    console.log(formData)
 
 
     return (
@@ -68,8 +103,8 @@ const Home = () => {
             <div className='subdiv'>
                 <h3>Production Type</h3>
                 <div className='buttonsubdiv'>
-                    <button className='button2'>Bulk Generation</button>
-                    <button className='button2'>Queue Generation</button>
+                    <button className='button2' value='bulk' onClick={onActive}>Bulk Generation</button>
+                    <button className='button2' value='queue' onClick={onActive}>Queue Generation</button>
                 </div>
             </div>
             <div className='subdiv'>
@@ -90,11 +125,36 @@ const Home = () => {
             </div>
             <div className='subdiv'>
                 <h3>Prompt Area</h3>
-                <input className="inputfield1" type="text" id="prompt" name="prompt" value={form.prompt} placeholder='A cute rabbit, white background, pastel hues, minimal illustration, line art, pen drawing' onChange={handleInputChange} />
-                <input className="inputfield2" type="text" id="style" name="style" value={form.style} placeholder='Style (optional)' onChange={handleInputChange} />
+                {inputFields.map((field, index) => (
+                    <div key={index}>
+                        <input
+                            type="text"
+                            name="prompt"
+                            placeholder={`Prompt ${field.id}`}
+                            value={formData.prompts[index] || ''}
+                            onChange={(e) => handleInputChange(e, index, 'prompts')}
+                            className='inputfield1'
+                        />
+                        <input
+                            type="text"
+                            name="style"
+                            placeholder={`Style ${field.id}`}
+                            value={formData.styles[index] || ''}
+                            onChange={(e) => handleInputChange(e, index, 'styles')}
+                            className='inputfield2'
+                        />
+                    </div>
+                ))}
+                {
+                    showQueueButton ? (
+                        <button className='button3' onClick={addInputFields}>+Add Prompt to Queue</button>
+                    ) : (
+                        <div></div>
+                    )
+                }
             </div>
             <div className='subdiv'>
-                <button className='button1'>Generate</button>
+                <button className='button1' onClick={handleSubmit}>Generate</button>
             </div>
         </div>
 
