@@ -1,43 +1,67 @@
 import React from 'react'
 import "./Result.css"
 import { useLocation } from 'react-router-dom';
-
-// Dynamically import all images from the assets folder
-const importAllImages = (requireContext) => {
-  return requireContext.keys().map(requireContext);
-};
-
-// Import images using require.context (loads all images from /src/assets)
-const images = importAllImages(require.context('../assets/trial_img', false, /\.(jpeg)$/));
+import { useNavigate } from 'react-router-dom';
 
 const Result = () => {
 
-  const location = useLocation();
-  const { formData } = location.state || {};
+  const location = useLocation()
+  const { formData, resultData } = location.state || {};
+
+  const navigate = useNavigate();
+  const handleSubmit = () => {
+    navigate('/');
+  };
+
+  console.log(resultData)
 
   return (
-    <div className='maindiv'>
-      <div className="image-gallery">
-        {images.map((imageSrc, index) => (
-          <div key={index} className="image-item">
-            <img src={imageSrc} alt={`${index + 1}`} />
+    <div className='mainresultdiv'>
+
+      {formData.quantity === 1 ? (
+        <div className="subdiv">
+          {resultData.map((imageObj, index) => (
+            <div key={index} className="item-style">
+              <img
+                src={`data:image/png;base64,${imageObj.b64}`}
+                alt={`GeneratedImage${index}`}
+                className="imagestyle"
+              />
+            </div>
+          ))}
+        </div>
+      )
+        :
+        (
+          <div className="image-gallery">
+            {resultData.map((imageObj, index) => (
+              <div key={index} className="item-style">
+                <img
+                  src={`data:image/png;base64,${imageObj.b64}`}
+                  alt={`GeneratedImage${index}`}
+                  className="image-style"
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className='subdiv'>
+        )
+
+      }
+      <div className='resultsubdiv'>
         <h3 className='heading1'>Prompt</h3>
         <div className='buttonsubdiv'>
-          <span className='p1'>{formData.prompt}</span>
+          <span className='p1'>{formData.prompts[0]}</span>
         </div>
       </div>
-      <div className='subdiv'>
+
+      <div className='resultsubdiv'>
         <h3 className='heading1'>Style</h3>
         <div className='buttonsubdiv'>
-          <span className='p1'>{formData.style}</span>
+          <span className='p1'>{formData.styles[0]}</span>
         </div>
       </div>
       <div className='subdiv'>
-        <button className='button1'>Close</button>
+        <button className='button1' onClick={handleSubmit} style={{ marginTop: "20px" }}>Close</button>
       </div>
     </div>
 
